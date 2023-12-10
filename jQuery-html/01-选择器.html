@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./lib/jquery.js"></script>
+</head>
+
+<body>
+  <ul>
+    <li class="start">11</li>
+    <li>22</li>
+    <li class="active">33</li>
+    <li class="a">44</li>
+    <li>55</li>
+    <li>66</li>
+    <li>
+      777
+      <ul>
+        <li>777-1</li>
+        <li>777-2</li>
+        <li>777-3</li>
+        <li>777-4</li>
+      </ul>
+    </li>
+  </ul>
+  <div class="box"></div>
+
+  <script>
+    // 1. 基本选择器
+    // console.log($("ul li")) // 返回一个伪数组
+    // console.log($("box"))
+    // console.log($("ul li:first-child"))
+    // console.log($("ul li:nth-child(1)"))
+    // 2. 特殊选择器
+    // console.log($("ul li:first"))
+    // console.log($("ul li:last"))
+    // console.log($("ul li:eq(0)"))
+    // console.log($("ul li:odd"))
+    // console.log($("ul li:even"))
+    // 3. 二次筛选方法
+    // console.log($("ul li").first())
+    // console.log($("ul li").last())
+    // let index = 3
+    // console.log($("ul li").eq(3))
+    // console.log($("ul li.active").next())
+    // console.log($("ul li").first().next())
+
+    // console.log($("ul li.active").nextAll())
+    // console.log($("ul li.active").nextAll('.a'))
+
+    // console.log($("ul li.active").prev())
+    // console.log($("ul li.active").prevAll())
+    // console.log($("ul li.active").prevUntil())
+    // console.log($("ul li.active").prevUntil("start"))
+
+    // console.log($("ul li.active").parent())
+    // console.log($("ul li.active").parents()) // html
+
+    // console.log($("ul li.active").siblings())
+
+    // console.log($("ul").children())
+    // console.log($("ul").find("li"))
+
+    // console.log($("ul li.active").index())
+  </script>
+</body>
+
+</html>

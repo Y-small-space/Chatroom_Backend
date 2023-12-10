@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./lib/jquery.js"></script>
+  <style>
+    .box {
+      height: 100px;
+      width: 100px;
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+  </ul>
+  <script>
+    // css()
+    // console.log($(".box").css("width"))
+    // console.log($(".box").css("height"))
+    // console.log($(".box").css("background-color"))
+
+    // $(".box").css("width", "200px")
+    // $(".box").css("height", 200)
+    // $(".box").css("background-color", "red")
+
+    $("ul li").css("color","red") // 隐式迭代
+
+    $("ul li:eq(3)").css({width:200,height:200,backgroundColor:"black"})
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./lib/jquery.js"></script>
+  <style>
+    .active{
+      background-color:yellow;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">active</div>
+  <ul>
+    <li>1</li>
+    <li class="active">2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+  </ul>
+  <script>
+    // $(".box").addClass("active")
+    // $(".box").removeClass("active")
+
+    // $("ul li").addClass("active")
+    // $("ul li").removeClass("active").eq(0).addClass("active")
+
+    // $("ul li").eq(0).addClass("active").siblings().removeClass("active")
+
+    // hasClass
+    console.log($("ul li:eq(0)").hasClass("active"))
+    // toggleClass 有则去掉， 没有则加
+    $("ul li:eq(1)").toggleClass("active")
+    
+  </script>
+</body>
+</html>

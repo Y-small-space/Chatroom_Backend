@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>操作属性</title>
+  <script src="./lib/jquery.js"></script>
+</head>
+<body>
+  <div id="box" index="1"></div>
+  <script>
+    // attr() 操作自定义属性
+    // prop() 操作原生属性
+
+    console.log($("#box").attr("id")) // 获取原生
+    console.log($("#box").attr("id","box2")) // 设置原生
+
+    console.log($("#box").attr("index")) // 获取自定义
+    console.log($("#box").attr("index","2")) // 设置自定义
+
+    console.log($("#box").removeAttr("index")) // 移除自定义
+    console.log($("#box").removeAttr("id")) // 移除原生
+
+    $("#mybtn").attr("disabled",true)
+
+
+    console.log($("#box").prop("id")) // 获取原生
+    console.log($("#box").prop("id","box2")) // 设置原生
+
+    console.log($("#box").prop("index")) // 获取自定义
+
+
+    console.log($("#box").removeProp("index")) // 移除自定义
+    console.log($("#box").removeProp("id")) // 移除原生
+
+
+
+
+    // console.log($("#box").attr("index"))
+    // console.log($("#box").prop("id"))
+
+    // console.log($("#box").attr("index","2")) 更改
+    // console.log($("#box").attr("index"))
+
+    // $("box").removeAttr("index") 移除
+    // $("box").removeAttr("id")
+
+    // $("#mybtn").attr("disabled",true)
+
+    // console.log($("#box").prop("id"))
+    // console.log($("#box").prop("id","box2"))
+    // console.log($("#box2").prop("id"))
+
+    
+  </script>
+</body>
+</html>

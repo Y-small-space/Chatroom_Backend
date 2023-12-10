@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./lib/jquery.js"></script>
+</head>
+
+<body>
+  <div class="box">
+    <div>
+      111111
+      <p>222222222
+        <span>3333333333</span>
+      </p>
+    </div>
+  </div>
+  <ul class="list1">
+
+  </ul>
+  <ul class="list2">
+
+  </ul>
+  <input type="text" name="" id="">
+  <script>
+    // html() innerHtml
+    console.log($(".box").html())
+    let arr = ["aaa", "bbb", "ccc"]
+    let listr = arr.map(item=>`<li>${item}</li>`).join("")
+    $("ul.list1").html(listr)
+
+    // text() innerText
+    console.log($(".box").text())
+    $("ul.list2").text(listr)
+
+    // val() value
+    console.log($("input").val())
+    $("input").val("abcdefg")
+  </script>
+</body>
+
+</html>

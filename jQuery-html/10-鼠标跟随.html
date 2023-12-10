@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./lib/jquery.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      width: 200px;
+      height: 50px;
+      background-color: yellow;
+      position: relative;
+      margin: 100px;
+    }
+
+    #box p {
+      width: 300px;
+      height: 200px;
+      background-color: red;
+      position: absolute;
+      left: 100px;
+      top: 100px;
+      display: none;
+      pointer-events: none;
+      z-index: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box">
+    Avatat
+    <p>
+      introduction
+    </p>
+  </div>
+
+  <div>111</div>
+  <script>
+    $("#box").mouseover(function () {
+      $(this).children("p").css("display", "block")
+    })
+    $("#box").mouseout(function () {
+      $(this).children("p").css("display", "none")
+    })
+    $("#box").mousemove(function (e) {
+      $(this).children("p").offset({
+        left: e.pageX,
+        top: e.pageY
+      })
+    })
+  </script>
+</body>
+
+</html>
