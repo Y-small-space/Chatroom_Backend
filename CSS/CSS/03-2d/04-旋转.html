@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: silver;
+    }
+    div{
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(white 50%,black 50%);
+      margin: 100px auto;
+      display: flex;
+      align-items: center;
+      border-radius: 50%;
+      transform: rotate(0deg);
+      transition: all 2s;
+      /* transform-origin: left top; */
+      /* 
+        rotate
+          正值 顺时针
+          负值 逆时针
+       */
+      /* transform: rotateX(0deg); */
+      /* transform: rotateY(0deg); */
+      /* 
+        rotate 中心
+          正值 顺时针
+          负值 逆时针
+       */
+    }
+    div:hover{
+      transform: rotate(360deg);
+    }
+    div::before{
+      content: "";
+      display: block;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(white 25%,black 25%);
+      border-radius: 50%;
+    }
+    div::after{
+      content: "";
+      display: block;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(black 25%,white 25%);
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+</body>
+</html>

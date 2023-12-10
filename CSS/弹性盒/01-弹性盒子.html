@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弹性盒</title>
+</head>
+  <style>
+    .box{
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+      border: 1px solid black;
+      display: flex;
+    }
+    .box div{
+      width: 100px;
+      height: 100px;
+      border: 1px dashed red;
+      margin: auto;
+    }
+  </style>
+<body>
+  <!-- 
+    影响：
+      1. 子元素默认横向排列
+      2. 让行内元素变成了块级元素
+      3. 只有一个元素的时候，加了margin:auto该元素会水平垂直居中
+   -->
+  <div class="box">
+    <div>1</div>
+  </div>
+</body>
+
+</html>
