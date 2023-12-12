@@ -95,4 +95,5 @@ module.exports = {
   },
   // 模式
   mode: "development", // 开发模式
+  devtool:"cheap-module-source-map"
 };
