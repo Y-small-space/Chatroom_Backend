@@ -8,6 +8,7 @@ const longestPalindrome = (s) => {
     dp[i][i] = true
   }
 
+  // 状态转移
   for (let j = 1; j < n; j++) {
     for (let i = 0; i < n; i++) {
       if (s[i] === s[j] && (j - i <= 2 || s[i - 1][j + 1] === true)) {
