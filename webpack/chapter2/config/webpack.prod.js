@@ -128,7 +128,7 @@ module.exports = {
     // new CssMinimizerPlugin(),
   ],
   optimization: {
-    minimize: true,
+    // 压缩操作
     minimizer: [
       // css压缩也可以写到optimization.minimizer里面，效果一样的
       new CssMinimizerPlugin(),
@@ -137,6 +137,10 @@ module.exports = {
         parallel: threads // 开启多进程
       })
     ],
+    splitChunks:{
+      chunks:"all",
+      // 其它都用默认值45rr
+    }
   },
   // devServer: {
   //   host: "localhost", // 启动服务器域名
