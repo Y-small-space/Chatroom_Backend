@@ -12,5 +12,9 @@ const isMatch = (str1, str2) => {
     if(f[i][j]){
       return f[i][j] === 1;
     }
+
+    let res = -1;
+
+    
   }
 }
