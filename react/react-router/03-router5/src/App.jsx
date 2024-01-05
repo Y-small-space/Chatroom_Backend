@@ -1,5 +1,7 @@
 import React from "react";
-import { HashRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
+import { HashRouter, Link } from 'react-router-dom';
+import RouterView from "./router";
+import routes from "./router/routes";
 
 /* 导入组件 */
 import A from './views/A';
@@ -27,21 +29,25 @@ function App() {
   return <HashRouter>
     {/* 导航部分 */}
     <NavBox>
-      <Link to="/">A</Link>
+      <Link to="/a">A</Link>
       <Link to="/b">B</Link>
       <Link to="/c">C</Link>
     </NavBox>
 
     {/* 路由容器:每一次页面加载或者路由切换完毕，都会根据当前的哈希值，到这里和每一个Route进行匹配 */}
     <div className="content">
-      <Switch>
+      {/* <Switch> */}
+      {/* 
         {/* 
            Switch：确保路由中，只要有一项匹配，则不再继续向下匹配
            exact：设置匹配模式为精准匹配
           */}
-        <Route exact path="/" component={A} />
+      {/* <Redirect exact from="/" to="/a" />
+        <Route path="/a" component={A} />
         <Route path="/b" component={B} />
-        <Route path="/c" component={() => {
+        <Route path="/c" component={C} />
+        <Redirect to="/a" /> */}
+      {/* <Route path="/c" component={() => {
           // 当路由地址匹配后，先把render函数执行，返回值就是我们需要渲染的内容
           // 在此函数中，可以处理一些事情，例如：登录态检验。。。
           let isLogin = true;
@@ -50,8 +56,8 @@ function App() {
           }
           return <Redirect to="/login" />
         }
-        } />
-        {/* 
+        } /> */}
+      {/* 
            // 放在最后一项，path设置*或者不写，意思是：以上都不匹配，则继续执行这个规则
            <Route path="*" component={404组件}>
            // 当然也可以不设置404组件，而是重定向到默认 / 地址：
@@ -60,10 +66,11 @@ function App() {
              + to：重定向的地址
              + exact：是对from地址的修饰，开启精准匹配
           */}
-        <Redirect to="/" />
-      </Switch>
+      {/* <Redirect to="/" /> */}
+      {/* </Switch> */}
+      <RouterView routes={routes} />
     </div>
-  </HashRouter>;
+  </HashRouter >;
 }
 
 export default App;

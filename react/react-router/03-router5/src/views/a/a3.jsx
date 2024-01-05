@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function a3() {
+export default function A3() {
   return (
-    <div>a3</div>
+    <div>A/////</div>
   )
 }

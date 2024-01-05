@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function a1() {
+export default function A1() {
   return (
-    <div>a1</div>
+    <div>a1.....</div>
   )
 }

@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import RouterView from '../router';
+import routes from '../router/aRoutes';
 
 /* 基础样式 */
 import styled from "styled-components";
+import A1 from './a/a1';
+import A2 from './a/a2';
+import A3 from './a/a3';
 const DemoBox = styled.div`
   display:flex;
   font-size:12px;
@@ -25,7 +30,14 @@ export default function A() {
       </div>
 
       <div className="view">
-
+        {/* 配置二级路由的匹配规则：需要把一级路由地址带上，不能省略 */}
+        {/* <Switch>
+          <Redirect exact from="/a" to="/a/a1" />
+          <Route path="/a/a1" component={A1} />
+          <Route path="/a/a2" component={A2} />
+          <Route path="/a/a3" component={A3} />
+        </Switch> */}
+        <RouterView routes={routes} />
       </div>
     </div>
   </DemoBox>

@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function a2() {
+export default function A2() {
   return (
-    <div>a2</div>
+    <div>A\\\</div>
   )
 }
