@@ -8,13 +8,14 @@ import A from './views/A';
 import B from './views/B';
 import C from './views/C';
 
-import styled from "styled-components";
-const NavBox = styled.nav`
+// import styled from "styled-components";
+import HomeHead from "./components/HomeHead";
+/* const NavBox = styled.nav`
   a {
     margin-right: 10px;
     color: #000;
   }
-`;
+`; */
 
 function App() {
   /* 
@@ -28,11 +29,12 @@ function App() {
    */
   return <HashRouter>
     {/* 导航部分 */}
-    <NavBox>
+    {/* <NavBox>
       <Link to="/a">A</Link>
       <Link to="/b">B</Link>
       <Link to="/c">C</Link>
-    </NavBox>
+    </NavBox> */}
+    <HomeHead/>
 
     {/* 路由容器:每一次页面加载或者路由切换完毕，都会根据当前的哈希值，到这里和每一个Route进行匹配 */}
     <div className="content">

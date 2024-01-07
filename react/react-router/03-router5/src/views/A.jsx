@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import RouterView from '../router';
 import routes from '../router/aRoutes';
 
@@ -16,6 +16,9 @@ const DemoBox = styled.div`
       font-size:12px;
       color:#000;
       display:block;
+      &.active{
+        color: red;
+      }
     }
   }
 `
@@ -24,9 +27,9 @@ export default function A() {
   return <DemoBox>
     <div className='box'>
       <div className='menu'>
-        <Link to="/a/a1" >A1</Link>
-        <Link to="/a/a2" >A2</Link>
-        <Link to="/a/a3" >A3</Link>
+        <NavLink to="/a/a1" >A1</NavLink>
+        <NavLink to="/a/a2" >A2</NavLink>
+        <NavLink to="/a/a3" >A3</NavLink>
       </div>
 
       <div className="view">
