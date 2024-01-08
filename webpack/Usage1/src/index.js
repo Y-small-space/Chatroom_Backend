@@ -1,1 +1,2 @@
-console.log("index");
+import './index.css';
+console.log('.')
