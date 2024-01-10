@@ -21,6 +21,8 @@ function App() {
             + 不再需要exact，默认每一项都是精准匹配
           原有的<Redirect>操作，被<Navigate to="/" />代替！！！
             + 遇到 <Navigate to ={{...}} /> to 的值可以是一个对象：pathname需要跳转的地址、search问号传参信息
+            + 设置 replace 属性，则不会新增立即记录，而是替换现有记录
+            + <Navigate to={{...}}/> to的值可以是一个对象：pathname需要跳转的地址、search问号传参数信息
          */}
         <Routes>
           <Route path="/" element={<Navigate to="/a" />} />
@@ -32,11 +34,11 @@ function App() {
             <Route path="/a/a3" element={<A3 />} />
           </Route>
           <Route path="/b" element={<B />} />
-          <Route path="/c" element={<C />} />
+          <Route path="/c/:id?/:name?" element={<C />} />
           {/* 如果以上都不匹配，我们可以渲染404组件，也可以重定向到A组件「传递不同的问号参数信息」 */}
           <Route path="*" element={<Navigate to={{
             pathname: '/a',
-            search: '?lx=404'
+            search: '?from=404'
           }}
           />} />
         </Routes>

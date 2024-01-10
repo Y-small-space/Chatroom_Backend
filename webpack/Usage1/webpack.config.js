@@ -1,6 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// 获取环境变量
+const NODE_ENV = process.env.NODE_ENV;
+const isProduction = NODE_ENV === 'production';
 
 module.exports = {
   mode: 'development',
@@ -25,7 +28,7 @@ module.exports = {
     watchFiles: [ // 监听文件的变化，如果这些文件变化了，可以重新编译
       "src/**/*.js" // 如果不配置watchFiles就是监听所有的文件
     ],
-    
+
     // 不管访问哪个路径，都会把请求重定向到index.html，交给前端路由来进行处理
     historyApiFallback: true
   },
@@ -35,7 +38,8 @@ module.exports = {
         test: /\.css$/,//匹配的条件 一般是一个正则，用来匹配文件的路径
         use: [// use指定的转换的方式
           // 'style-loader', // 通过style标签动态插入样式到HTML里
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
+          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader' // 作用是把css代码转换为js代码
         ]
       }
@@ -65,3 +69,7 @@ module.exports = {
      */
   ]
 }
+
+/* 
+  
+ */
