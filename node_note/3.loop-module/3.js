@@ -1,64 +1,75 @@
-const path = require('path');
-const fs = require('fs');
-const vm = require('vm')
+const path = require('path'); // 引入 Node.js 的 path 模块，用于处理文件路径
+const fs = require('fs'); // 引入 Node.js 的文件系统模块，用于读取文件
+const vm = require('vm'); // 引入 Node.js 的虚拟机模块，用于执行代码
+
+// 定义 Module 构造函数，创建模块对象
 function Module(id) {
-    this.id = id;
-    this.exports = {}
+    this.id = id; // 模块的标识符
+    this.exports = {}; // 模块的导出内容
 }
+
+// 定义模块的不同扩展处理方式
 Module._extensions = {
-    '.js'(module) {
-        const content = fs.readFileSync(module.id, 'utf8');
-        const fn = vm.compileFunction(content, ['exports', 'require', 'module', "__filename", "__dirname"]);
-        // this -> module.exxports
-        const exports = module.exports
-        let thisValue = exports
-        let require = req;
-        let filename = module.id;
-        let dirname = path.dirname(filename)
-        // 让函数执行  module.exports = 'hello'
-        // fn.apply(this)
-        // 执行某个函数，this是谁，参数是谁
-        console.log(fn.toString())
-        Reflect.apply(fn,thisValue,[exports,require,module,filename,dirname])
-     },
-    '.json'(module) {
-        const content = fs.readFileSync(module.id, 'utf8');
-        module.exports =  JSON.parse(content);
-     },
+    '.js'(module) { // 处理 .js 文件的方法
+        const content = fs.readFileSync(module.id, 'utf8'); // 读取模块文件的内容
+        const fn = vm.compileFunction(content, ['exports', 'require', 'module', '__filename', '__dirname']); // 编译模块内容为函数
+        const exports = module.exports; // 模块的导出内容
+        let thisValue = exports; // 函数执行上下文中的 this 值为 exports
+        let require = req; // require 函数的别名
+        let filename = module.id; // 模块文件的路径
+        let dirname = path.dirname(filename); // 模块文件所在目录的路径
+        console.log(fn.toString()); // 输出函数内容（用于调试）
+        Reflect.apply(fn, thisValue, [exports, require, module, filename, dirname]); // 执行编译后的函数
+    },
+    '.json'(module) { // 处理 .json 文件的方法
+        const content = fs.readFileSync(module.id, 'utf8'); // 读取模块文件的内容
+        module.exports = JSON.parse(content); // 将 JSON 解析后的内容赋值给模块的导出内容
+    },
 }
+
+// 解析模块的文件名
 Module._resolveFilename = function (id) {
-    const filename = path.resolve(__dirname,id);
-    if (fs.existsSync(filename)) {
-        return filename
+    const filename = path.resolve(__dirname, id); // 解析模块文件的完整路径
+    if (fs.existsSync(filename)) { // 检查文件是否存在
+        return filename; // 如果存在，则返回文件路径
     }
-    const keys = Object.keys(Module._extensions);
-    for (let i = 0; i < keys.length; i++){ // 尝试添加后缀
-        const ext = keys[i];
-        const filename = path.resolve(__dirname, id + ext)
-        if (fs.existsSync(filename)) {
-            return filename
+    const keys = Object.keys(Module._extensions); // 获取所有支持的文件扩展名
+    for (let i = 0; i < keys.length; i++) { // 遍历所有扩展名
+        const ext = keys[i]; // 获取当前扩展名
+        const filename = path.resolve(__dirname, id + ext); // 添加扩展名后解析文件路径
+        if (fs.existsSync(filename)) { // 检查带有扩展名的文件是否存在
+            return filename; // 如果存在，则返回文件路径
         }
     }
-    throw new Error('cannot found module')
+    throw new Error('cannot found module'); // 抛出找不到模块的错误
 }
+
+// 加载模块
 Module.prototype.load = function () {
-    let ext =  path.extname(this.id)
-    Module._extensions[ext](this)
+    let ext = path.extname(this.id); // 获取模块文件的扩展名
+    Module._extensions[ext](this); // 根据扩展名调用对应的处理方法加载模块
 }
-Module._cache = {}
+
+// 模块缓存
+Module._cache = {};
+
+// 自定义 require 函数
 function req(id) {
-    const filename = Module._resolveFilename(id)
-    let existsModule = Module._cache[filename]
-    if (existsModule) { // 说明模块加载过
-        return existsModule.exports
+    const filename = Module._resolveFilename(id); // 解析模块文件的完整路径
+    let existsModule = Module._cache[filename]; // 检查模块是否已缓存
+    if (existsModule) { // 如果模块已被缓存
+        return existsModule.exports; // 直接返回缓存的模块导出内容
     }
-    const module = new Module(filename); // 这个对象里最重要的就是exports对象
-    Module._cache[filename] = module; // 加载过缓存起来
-    module.load()
-    return module.exports; // 导出这个对象
+    const module = new Module(filename); // 创建新的模块对象
+    Module._cache[filename] = module; // 将模块对象缓存起来
+    module.load(); // 加载模块内容
+    return module.exports; // 返回模块的导出内容
 }
-let a = req('./a.js'); // require拿到的是module.exports的结果如果是引用对象里面的内容变化了重新require可以拿到最新的
-console.log(a);
+
+// 尝试加载一个模块
+let a = req('./a.js'); // 使用自定义 require 函数加载模块文件 a.js
+console.log(a); // 输出加载的模块内容
+
 
 // this 和 module.exports 也是同一个值，可以互相调用
 // let exports = module.exports = {}
