@@ -17,7 +17,7 @@ Module._extensions = {
         let thisValue = exports; // 函数执行上下文中的 this 值为 exports
         let require = req; // require 函数的别名
         let filename = module.id; // 模块文件的路径
-        let dirname = path.dirname(filename); // 模块文件所在目录的路径
+        let dirname = path.dirname(filename); // 模块文件所在目录的路fpizzkre径
         console.log(fn.toString()); // 输出函数内容（用于调试）
         Reflect.apply(fn, thisValue, [exports, require, module, filename, dirname]); // 执行编译后的函数
     },
@@ -99,5 +99,5 @@ console.log(a); // 输出加载的模块内容
 // 猜测：6.读取文件并且给这个exports赋值
 
 
-// require方法 最终返回的是module.exports, 用户只要将结果放到module.exports上就可以获取到了
+// require方法 最终返回的是module.exports, 用户只要将结果放到module.exports上就可以获取到了mm b brcc
 

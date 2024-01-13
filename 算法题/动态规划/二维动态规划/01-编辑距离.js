@@ -17,7 +17,8 @@ const minDistance = (word1, word2) => {
   // 3.填充矩阵
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= m; j++) {
-      if (word1[i] === word2[j]) {
+      // if (word1[i] === word2[j]) {
+      if (word1[i - 1] === word2[j - 1]) {
         dp[i][j] = dp[i - 1][j - 1] // 若相同取之前的次数
       } else {
         // 不同时取三种操作最少次数加1
