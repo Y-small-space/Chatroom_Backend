@@ -1,0 +1,15 @@
+{
+  "name": "07-flow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "webpack":"^5.76.2",
+    "webpack-cli":"^5.0.1"
+  }
+}
