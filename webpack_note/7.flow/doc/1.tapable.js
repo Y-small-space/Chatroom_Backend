@@ -21,6 +21,7 @@ class SomePlugin{
         });
     }
 }
+
 const somePlugin = new SomePlugin();
 somePlugin.apply();
 
