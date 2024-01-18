@@ -1,8 +1,8 @@
 class DonePlugin {
   apply(complier) {
-    complier.hooks.run.tap('RunPlugin', () => {
+    complier.hooks.done.tap('DonePlugin', () => {
       console.log('====================================');
-      console.log('run 结束编译');
+      console.log('Done 结束编译');
       console.log('====================================');
     })
   }

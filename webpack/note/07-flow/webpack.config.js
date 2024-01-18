@@ -1,11 +1,13 @@
 const path = require('path');
-const RunPlugin = 
+const RunPlugin = require('./plugins/RunPlugin');
+const DonePlugin = require('./plugins/DonePlugin');
 module.exports = {
   mode: 'developement',
+  context:process.cwd(),
   devTool: false,
   entry: {
-    entry1: 'entry1.js',
-    entry2: 'entry2.js'
+    entry1: './src/entry1.js',
+    entry2: './src/entry2.js'
   },
   output:{
     path:path.resolve('./dist'),
@@ -20,13 +22,14 @@ module.exports = {
       {
         test:/\.js$/,
         use:[
-          path.resolve(__dirname,'loaders/logger-loader.js'),
+          path.resolve(__dirname,'loaders/logger1-loader.js'),
           path.resolve(__dirname,'loaders/logger2-loader.js')
         ]
       }
     ]
   },
   plugins:[
-    new RunPlugin()
+    new RunPlugin(),
+    new DonePlugin()
   ]
 }
