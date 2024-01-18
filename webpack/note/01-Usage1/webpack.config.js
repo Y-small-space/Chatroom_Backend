@@ -40,7 +40,17 @@ module.exports = {
           // 'style-loader', // 通过style标签动态插入样式到HTML里
           // MiniCssExtractPlugin.loader,
           isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-          'css-loader' // 作用是把css代码转换为js代码
+          'css-loader', // 作用是把css代码转换为js代码
+          'postcss-loader'
+        ]
+      },
+      {
+        test:/\.less$/,
+        use:[
+          isProduction?MiniCssExtractPlugin.loader:'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
         ]
       }
     ]
