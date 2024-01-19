@@ -14,7 +14,8 @@ class Complication {
     this.options = options;
     this.options.context = this.options.context || toUnixSeq(process.cwd());
     this.fileDependencies = new Set();
-    this.modules = []
+    this.modules = []; // 存放本次编译所有产生的模块
+    this.chunks = []; // 存放所有的代码块
   }
 
   build(onComplied) {
@@ -32,7 +33,14 @@ class Complication {
       // 把此文件添加到文件依赖列表中
       this.fileDependencies.add(entryFilePath);
       // 从入口文件发出，开始编译模块
-      this.buildModule(entryName, entryFilePath);
+      let entryModule = this.buildModule(entryName, entryFilePath);
+      // 8.根据入口和模块之间的依赖关系，组装成一个个包含多个模块的chunk
+      let chunk = {
+        name: entryName, // 入口的名称
+        entryModule, // 入口的模块 ./src/entry1.js
+        modules: this.modules.filter(module => module.name.includes(entryName)) // 此入口对应的模块
+      }
+      this.chunks.push(chunk);
     }
   }
 
@@ -92,7 +100,7 @@ class Complication {
         existModule.names.push(entryName);
       } else {
         this.buildModule(entryName, depModulePath);
-        this.modules.push(module);
+        // this.modules.push(module);
       }
       // this.buildModule(entryName, depModulePath);
     });
