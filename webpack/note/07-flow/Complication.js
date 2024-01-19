@@ -14,6 +14,7 @@ class Complication {
     this.options = options;
     this.options.context = this.options.context || toUnixSeq(process.cwd());
     this.fileDependencies = new Set();
+    this.modules = []
   }
 
   build(onComplied) {
@@ -35,7 +36,7 @@ class Complication {
     }
   }
 
-  buildModule(name, modulePath) {
+  buildModule(entryName, modulePath) {
     // 从入口文件出发，调用所有配置的loader对模块进行转换
     let rawSourceCode = fs.readFileSync(modulePath, 'utf8');
     // 获取loader的配置规则
@@ -48,12 +49,71 @@ class Complication {
         loaders.push(...rule.use);
       }
     });
+
     let transformedSourceCode = loaders.reduceRight((sourceCode, loader) => {
       return require(loader)(sourceCode);
     }, rawSourceCode);
+
+    // 获取当前模块，也就是 ./src/entry1.js的模块Id
+    let moduleId = './' + path.posix.relative(this.options.context, modulePath);
+    let module = { id: moduleId, names: [entryName], dependencies: new Set() }
+    this.modules.push(module)
     // 经过loader的转换，transformedSourceCode肯定是一个字符串了
     // 7.再找出该模块依赖的模块，再递归本步骤知道所有入口依赖的文件都经过了本步骤的处理
+    let ast = parser.parse(transformedSourceCode, { sourceType: 'module' });
+    traverse(ast, {
+      CallExpression: ({ node }) => {
+        // 如果调用的方法名是require的话，说明就是要依赖一个其他模块
+        if (node.callee.name === 'require') {
+          let depModuleName = node.arguments[0].value; // ./title
+          // 获取当前的模块所在的目录
+          let dirName = path.posix.dirname(modulePath);
+          let depModulePath = path.posix.join(dirName, depModuleName);
+          let { extensions } = this.options.resolve;
+          // 尝试添加扩展名
+          depModulePath = tryExtensions(depModulePath, extensions);
+          this.fileDependencies.add(depModulePath);
+          // 获得此模块的ID，也就是相对于根目录的相对路径
+          let depModuleId = "./" + path.posix.relative(this.options.context, depModulePath);
+          // 修改语法树，把引入模块路径改为模块的ID
+          node.arguments[0] = types.stringLiteral(depModuleId);
+          // 给当前的entry1模块添加依赖信息
+          module.dependencies.add({ depModuleId, depModulePath });
+        }
+      }
+    });
+
+    const { code } = generator(ast);
+    // 转换源代码，把转换后的原发放在_source属性，用于后面写入文件
+    module._source = code;
+    [...module.dependencies].forEach(({ depModuleId, depModulePath }) => {
+      let existModule = this.modules.find(item => item.id === depModuleId);
+      if (existModule) {
+        existModule.names.push(entryName);
+      } else {
+        this.buildModule(entryName, depModulePath);
+        this.modules.push(module);
+      }
+      // this.buildModule(entryName, depModulePath);
+    });
+    return module;
   }
+}
+
+function tryExtensions(modulePath, extensions) {
+  // 如果此绝对路径上的文件是真实存在的，直接返回
+  if (fs.existsSync(modulePath)) {
+    return modulePath
+  }
+
+  for (let i = 0; i < extensions.length; i++) {
+    let filePath = modulePath + extensions[i];
+    if (fs.existsSync(filePath)) {
+      return filePath;
+    }
+  }
+
+  throw new Error(`模块${modulePath}未找到`);
 }
 
 module.exports = Complication;

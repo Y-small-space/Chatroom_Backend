@@ -3,7 +3,7 @@ const RunPlugin = require('./plugins/RunPlugin');
 const DonePlugin = require('./plugins/DonePlugin');
 module.exports = {
   mode: 'developement',
-  context:process.cwd(),
+  // context:process.cwd(),
   devTool: false,
   entry: {
     entry1: './src/entry1.js',
