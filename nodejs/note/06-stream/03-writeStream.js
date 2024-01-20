@@ -1,22 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 
-const ws = fs.createWriteStream(path.resolve(__dirname, 'copy.md'), {
-    flags: 'w', // fs.open(flags)
-    mode: 0o666,
-    autoClose: true, // 关闭文件 fs.close
-    emitClose: true, // 触发关闭事件 this.emit('close')
-    start: 0,
-    highWaterMark: 3 // 读取意味着每次读多少，在写的时候意味着就是希望占用多大的内存空间, 超过期望值会认为淹没了可用内存
+const ws = fs.createWriteStream(path.resolve(__dirname,'copy.md'),{
+  flags:'w',
+  mode:0o666,
+  autoClose:true,
+  emitClose:true,
+  start:0,
+  highWaterMark:1
 })
+
 // fs.write()
 
-// highWaterMark 当写入的数据到达highWaterMark的时候 就会返回false，意味着不要在写入了，如果在继续调用write
-// 方法 我就只能将写入的数据放到内存中了
+// highWaterMark 当写入的数据达到 highWaterMark 的时候，就会返回false 意味着不要再写入了 如果继续调用 write
+// 方法 就只能将写入的数据放在内存中了
 
-// 链表 用链表实现的队列，从而将多次写入变成顺序写入
+// 链表 用链表表示 实现的队列 从而将多次写入 改成顺序写入
 
-// 只用一个字节完成写入操作
+// 只用一个字节完成写入操作 
 
 let idx = 0;
 function write() {

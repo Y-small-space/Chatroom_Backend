@@ -1,7 +1,7 @@
-const fs = require('fs');
 const path = require('path');
+const ReadStream = require('./ReadStream');
 
-const rs = fs.createReadStream(path.resolve(__dirname, 'test.md'), {
+const rs = new ReadStream(path.resolve(__dirname, 'test.md'), {
   // 底层还是 fs.open() fs.read | fs.close
   // fs.open(this.emit('open'))
   // fs.read(this.emit('data'))
