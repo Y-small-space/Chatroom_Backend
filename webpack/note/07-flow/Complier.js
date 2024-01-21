@@ -1,4 +1,5 @@
 const { SyncHook } = require("tapable");
+const path = require('path');
 const Complication = require("./Complication");
 const fs = require('fs');
 
@@ -15,19 +16,25 @@ class Complier {
     this.hooks.run.call();
 
     const onComplied = (err, stats, fileDependencies) => {
+      // 10. 在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
+      const { assets } = stats;
+      for(let filename in assets){
+        // 获取输出文件的绝对路径
+        let filePath = path.posix.join(this.options.output.path,filename);
+        fs.writeFileSync(filePath,assets[filename],'utf-8');
+      }
       callback(err, {
         toJson: () => stats
       });
 
       // fileDependencies 指的是本次打包涉及哪些文件
       // 监听这些文件的变化，当文件发生变化，重新开启一个新的编译
-      [...fileDependencies].forEach(file=>{
-        fs.watch(file,()=>this.compile(onComplied))
+      [...fileDependencies].forEach(file => {
+        fs.watch(file, () => this.compile(onComplied))
       })
     }
 
     this.compile(onComplied);
-
     this.hooks.done.call();
   }
 

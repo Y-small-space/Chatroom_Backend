@@ -16,6 +16,7 @@ class Complication {
     this.fileDependencies = new Set();
     this.modules = []; // 存放本次编译所有产生的模块
     this.chunks = []; // 存放所有的代码块
+    this.assets = {};
   }
 
   build(onComplied) {
@@ -38,10 +39,26 @@ class Complication {
       let chunk = {
         name: entryName, // 入口的名称
         entryModule, // 入口的模块 ./src/entry1.js
-        modules: this.modules.filter(module => module.name.includes(entryName)) // 此入口对应的模块
+        modules: this.modules.filter(module => module.names.includes(entryName)) // 此入口对应的模块
       }
       this.chunks.push(chunk);
     }
+
+    // 9. 要把每个 chunk 转换成 一个单独的文件 加入到输出列表 
+    this.chunks.forEach(chunk => {
+      let outputFilename = this.options.output.filename.replace('[name]', chunk.name);
+      this.assets[outputFilename] = getSourceCode(chunk);
+    });
+
+    onComplied(
+      null,
+      {
+        modules:this.modules,
+        chunks:this.chunks,
+        assets:this.assets
+      },
+      this.fileDependencies
+    );
   }
 
   buildModule(entryName, modulePath) {
@@ -73,13 +90,15 @@ class Complication {
       CallExpression: ({ node }) => {
         // 如果调用的方法名是require的话，说明就是要依赖一个其他模块
         if (node.callee.name === 'require') {
+          // .代表当前的模块所有目录 不是工作目录
           let depModuleName = node.arguments[0].value; // ./title
           // 获取当前的模块所在的目录
           let dirName = path.posix.dirname(modulePath);
           let depModulePath = path.posix.join(dirName, depModuleName);
           let { extensions } = this.options.resolve;
-          // 尝试添加扩展名
+          // 尝试添加扩展名找到真正的模块路径
           depModulePath = tryExtensions(depModulePath, extensions);
+          // 把依赖的模块路径添加到文件依赖列表
           this.fileDependencies.add(depModulePath);
           // 获得此模块的ID，也就是相对于根目录的相对路径
           let depModuleId = "./" + path.posix.relative(this.options.context, depModulePath);
@@ -122,6 +141,42 @@ function tryExtensions(modulePath, extensions) {
   }
 
   throw new Error(`模块${modulePath}未找到`);
+}
+
+function getSourceCode(chunk){
+  return `
+  (() => {
+    var modules = {
+      ${
+        chunk.modules
+        .filter(module=>module.id!==chunk.entryModule.id)
+        .map(
+            module=>`
+            "${module.id}": module => {
+               ${module._source}
+              }
+            `
+        )
+      }  
+    };
+    var cache = {};
+    function require(moduleId) {
+      var cachedModule = cache[moduleId];
+      if (cachedModule !== undefined) {
+        return cachedModule.exports;
+      }
+      var module = cache[moduleId] = {
+        exports: {}
+      };
+      modules[moduleId](module, module.exports, require);
+      return module.exports;
+    }
+    var exports = {};
+    (() => {
+      ${chunk.entryModule._source}
+    })();
+  })();
+  `;
 }
 
 module.exports = Complication;
