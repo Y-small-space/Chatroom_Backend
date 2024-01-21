@@ -2,6 +2,7 @@ const {SyncHook} = require('tapable');
 const path = require('path');
 const Complication = require('./Complication');
 const fs = require('fs');
+const webpack = require('webpack')
 class Compiler{
     constructor(options) {
        this.options = options;
