@@ -74,7 +74,7 @@ export function render(virtualDOM, container) {
 
         children.forEach(child => {
           // 子节点是文本
-          if (typeof child === 'string') {
+          if (/^(string|number)$/.test(typeof child)) {
             ele.appendChild(document.createTextNode(child));
             return;
           }
@@ -88,5 +88,9 @@ export function render(virtualDOM, container) {
     })
     // 把新增的标签插入指定容器中
     container.appendChild(ele)
+  } else if (typeof type === 'function') {
+    // 处理函数组件
+    const component = type(props);
+    render(component, container);
   }
 }

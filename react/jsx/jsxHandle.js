@@ -55,7 +55,7 @@ export function render(virtualDOM, container) {
     let ele = document.createElement(type);
     // 为标签设置相关的属性 & 子节点
     each(props, (value, key) => {
-      
+
       if (key === 'className') {
         ele.className = value;
         return;
@@ -90,6 +90,10 @@ export function render(virtualDOM, container) {
 
     // 把新增的标签，增加到指定容器中
     container.appendChild(ele);
+  } else if (typeof type === 'function') {
+    // 处理函数组件
+    const component = type(props);
+    render(component, container);
   }
 }
 
