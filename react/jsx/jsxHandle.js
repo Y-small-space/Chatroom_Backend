@@ -11,8 +11,8 @@
         let keys = Reflect.ownKeys(arr);
  */
 const each = function each(obj, callback) {
-  if (obj === null || typeof obj !== "object") throw new TypeError('obj is not a object');
-  if (typeof callback !== 'function') throw new TypeError('callback is not a function');
+  if (obj === null && typeof obj !== "object") throw new TypeError('obj is not a object');
+  if (typeof callback !== 'function') throw new TypeError('k');
   let keys = Reflect.ownKeys(obj);
   keys.forEach(key => {
     let value = obj[key];
@@ -55,8 +55,7 @@ export function render(virtualDOM, container) {
     let ele = document.createElement(type);
     // 为标签设置相关的属性 & 子节点
     each(props, (value, key) => {
-      // <div style={{...}}></div>
-      // className的处理：value存储的是样式类名
+      
       if (key === 'className') {
         ele.className = value;
         return;
