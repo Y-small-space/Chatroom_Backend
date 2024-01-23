@@ -41,4 +41,5 @@ class Compiler{
         complication.build(onCompiled);
     }
 }
+
 module.exports = Compiler;

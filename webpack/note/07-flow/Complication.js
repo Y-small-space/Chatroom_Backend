@@ -5,6 +5,7 @@ const parser = require('@babel/parser'); // 把源代码转换成AST的编译器
 const traverse = require('@babel/traverse').default; // 遍历语法树的工具
 const generator = require('@babel/generator').default; // 把转换后的语法树重新生成源代码的工具
 
+// 将文件路径中的反斜杠转换为正斜杠，以统一路径格式。
 function toUnixSeq(filePath) {
   return filePath.replace(/\\/g, '/');
 }
@@ -16,12 +17,14 @@ class Complication {
     this.fileDependencies = new Set();
     this.modules = []; // 存放本次编译所有产生的模块
     this.chunks = []; // 存放所有的代码块
-    this.assets = {};
+    this.assets = {}; // 存放输出的文件，属性是文件名，值是文件的内容
   }
 
+  // 开始编译的入口方法。根据入口文件和配置信息，逐步进行模块加载、转换、依赖分析、生成代码块等操作。
   build(onComplied) {
     // 5.根据配置中的entry找出入口文件
     let entry = {};
+    
     if (typeof this.options.entry === 'string') {
       entry.main = this.options.entry;
     } else {
@@ -53,14 +56,15 @@ class Complication {
     onComplied(
       null,
       {
-        modules:this.modules,
-        chunks:this.chunks,
-        assets:this.assets
+        modules: this.modules,
+        chunks: this.chunks,
+        assets: this.assets
       },
       this.fileDependencies
     );
   }
 
+  // 构建模块的方法，对每个模块进行加载、转换和依赖分析。
   buildModule(entryName, modulePath) {
     // 从入口文件出发，调用所有配置的loader对模块进行转换
     let rawSourceCode = fs.readFileSync(modulePath, 'utf8');
@@ -127,6 +131,7 @@ class Complication {
   }
 }
 
+// 尝试添加文件扩展名以找到真正的模块路径。
 function tryExtensions(modulePath, extensions) {
   // 如果此绝对路径上的文件是真实存在的，直接返回
   if (fs.existsSync(modulePath)) {
@@ -143,21 +148,21 @@ function tryExtensions(modulePath, extensions) {
   throw new Error(`模块${modulePath}未找到`);
 }
 
-function getSourceCode(chunk){
+// 生成代码块的源代码，包括模块加载和执行逻辑。
+function getSourceCode(chunk) {
   return `
   (() => {
     var modules = {
-      ${
-        chunk.modules
-        .filter(module=>module.id!==chunk.entryModule.id)
-        .map(
-            module=>`
+      ${chunk.modules
+      .filter(module => module.id !== chunk.entryModule.id)
+      .map(
+        module => `
             "${module.id}": module => {
                ${module._source}
               }
             `
-        )
-      }  
+      )
+    }  
     };
     var cache = {};
     function require(moduleId) {
