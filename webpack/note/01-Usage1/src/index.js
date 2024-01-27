@@ -1,3 +1,2 @@
-import './index.css';
-console.log('.');
-console.log('.');
+import {vendor} from './vendor';
+console.log(vendor);

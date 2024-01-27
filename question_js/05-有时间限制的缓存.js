@@ -5,7 +5,7 @@ class TimeLimitedCache {
 
   set(key, value, duration) {
     // 清理过期项
-    this.removeExpire();
+    this.removeExpire()
     // 检查缓存中是否已存在键
     const ans = this.cache.has(key);
     // 设置键值对，以及缓存时间
