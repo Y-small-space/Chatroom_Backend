@@ -1,7 +1,7 @@
 const longestPalindrome = (s) => {
   const n = s.length;
 
-  if (n < 2) {
+  if (n < 2) {cc
     return s; // 如果字符串长度小于2，本身就是回文串
   }
 

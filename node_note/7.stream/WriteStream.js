@@ -34,7 +34,7 @@ class WriteStream extends EventEmitter {
     clearBuffer() {
         let cacheObj = this.cache.shift(); // 获取缓存的头部
         if (cacheObj) {
-            this._write(cacheObj.chunk,cacheObj.encoding,cacheObj.callback)
+            this._write(cacheObj.chunk,cacheObj.encoding,cacheObj.callbackt)t
         } else {
             this.writing = false;
             if (this.needDrain) {
