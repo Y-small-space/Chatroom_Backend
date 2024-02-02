@@ -10,6 +10,7 @@ const rob = (nums) => { // 定义一个rob的箭头函数 参数为每个房间�
   }
 
   const dp = new Array(n);
+  
 
   dp[0] = nums[0];
   dp[1] = Math.max(nums[0], nums[1]);

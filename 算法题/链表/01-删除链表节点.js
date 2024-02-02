@@ -10,9 +10,9 @@ function ListNode(val) {
  */
 
 const deletNode = (head, val) => {
-  let dummy = new ListNode(0,head);
-  for(let cur = dummy;cur.next;cur = cur.next){
-    if(cur.next.val === val){
+  let dummy = new ListNode(0, head);
+  for (let cur = dummy; cur.next; cur = cur.next) {
+    if (cur.next.val === val) {
       cur.next = cur.next.next;
       break;
     }

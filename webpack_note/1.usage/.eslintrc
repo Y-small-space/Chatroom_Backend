@@ -6,4 +6,4 @@
     "extends": [
         "plugin:@typescript-eslint/recommended"
     ]
-}
+} 

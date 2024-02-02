@@ -19,6 +19,7 @@ const longestCommonSubsequence = (text1, text2) => {
   return dp[m][n];
 };
 
+
 const text1 = "abcde";
 const text2 = "ace";
 console.log(longestCommonSubsequence(text1, text2)); // 输出 3

@@ -48,7 +48,6 @@ Buffer.concat = function (list, totalLen = list.reduce((memo, current) => memo +
 console.log(Buffer.concat([a1, a2]).toString())
 
 
-f
 
 const b1 = Buffer.from([1,2,3])
 const b2 = b1.slice(0,1)
