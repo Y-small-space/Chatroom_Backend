@@ -4,7 +4,7 @@ const minDistance = (word1, word2) => {
 
   // 1.初始化矩阵
   const dp = new Array(n + 1).fill(0).map(() => new Array(m + 1).fill(0));
-c
+
   // 2.初始化边界
   for (let i = 0; i <= n; i++) {
     dp[i][0] = i; // 如果word2为空，需要的编辑次数

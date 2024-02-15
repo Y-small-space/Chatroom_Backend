@@ -1,4 +1,3 @@
-
 //可以把JS源代码默认换成AST抽象语法树
 const esprima = require('esprima');
 //遍历语法树，可以用来修改树上的节点

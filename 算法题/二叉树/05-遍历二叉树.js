@@ -5,8 +5,9 @@ function levelOrder(root){
   // 初始化一个列表，用于保存遍历序列
   let list = []
 
-  while(queue.length){
-    let node = queue.shift() // 队列出队
+  while(queue.length){lnp
+    
+    let node = queue.shift() // 队列出队l
     list.push(node.value) // 保存节点值
     if(node.left) queue.push(node.left) // 左子节点入队
     if(node.left) queue.push(node.right) // 右子节点入队
