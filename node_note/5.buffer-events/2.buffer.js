@@ -5,7 +5,7 @@
 // 1) .buffer声明方式需要指定大小
 
 // 长度  指定buffer中存放的特定内容  我们可以直接给字符串
-kk
+
 console.log(Buffer.alloc(3)); // node中的f最小单位都是字节
 console.log(Buffer.from([100, 200])); // 这种方式不常用
 console.log(Buffer.from('帅'))
@@ -17,18 +17,18 @@ console.log(Buffer.from('帅'))
 
 // slice 可以截取buffer中某个部分的数据 1个汉字三个字节 （截取了2个字节）
 // slice 可以截取buffer中某个部分的数据 1个汉字1个字节 （截取了1个字节）
-const a1 = Buffer.from('你好').slice(0,5);  // 好截取了2个字节
+const a1 = Buffer.from('你好').slice(0, 5);  // 好截取了2个字节
 const a2 = Buffer.from('好世界').slice(2); // 好的两个字节之后截取
 const a3 = Buffer.alloc(12);
 // target 拷贝的目标
 // targetStart 从目标的哪个位置进行拷贝
 // sourceStart 从哪个字节开始拷贝
 // sourceEnd 拷贝到哪个位置
-c
+
 // 所谓的copy就是循环buffer中的每一项放到大buffer中
-Buffer.prototype.copy = function (target,targetStart,sourceStart = 0,sourceEnd = this.length) {
-    for (let i = 0; i < sourceEnd - sourceStart; i++){
-        target[targetStart + i] = this[sourceStart + i]; 
+Buffer.prototype.copy = function (target, targetStart, sourceStart = 0, sourceEnd = this.length) {
+    for (let i = 0; i < sourceEnd - sourceStart; i++) {
+        target[targetStart + i] = this[sourceStart + i];
     }
 }
 // a1.copy(a3, 0, 0,5); // api用不到
@@ -49,8 +49,8 @@ console.log(Buffer.concat([a1, a2]).toString())
 
 
 
-const b1 = Buffer.from([1,2,3])
-const b2 = b1.slice(0,1)
+const b1 = Buffer.from([1, 2, 3])
+const b2 = b1.slice(0, 1)
 // b2[0] = 100;
 // console.log(b1)
 

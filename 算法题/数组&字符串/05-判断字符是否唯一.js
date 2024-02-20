@@ -1,17 +1,39 @@
 // 实现一个算法，确定一个字符串 s 的所有字符是否全都不同。
-function areAllCharactersUnique(s) {
-  let checker = 0;
-
-  for (let i = 0; i < s.length; i++) {
-      const charCode = s.charCodeAt(i) - 'a'.charCodeAt(0);
-      if ((checker & (1 << charCode)) > 0) {
-          return false; // 字符重复出现，返回false
-      }
-      checker |= (1 << charCode); // 将对应位置的位设置为1
+// 使用set数据结构
+const isUnique = (s) => {
+  const charSet = new Set();
+  for (const char of s) {
+    if (charSet.has(char)) {
+      return false; // 如果已经存在，说明有重复字符
+    }
+    charSet.add(char);
   }
+  return true; // 没有重复字符
+};
 
-  return true; // 所有字符都是唯一的，返回true
-}
+// 使用哈希表
+const isUnique2 = (s) => {
+  const charMap = {};
+  for (const char of s) {
+    if (charMap[char]) {
+      return false; // 如果已经存在，说明有重复字符
+    }
+    charMap[char] = true;
+  }
+  return true; // 没有重复字符
+};
+
+// 使用排序
+const isUnique3 = (s) => {
+  const sortedString = s.split('').sort().join('');
+  for (let i = 0; i < sortedString.length - 1; i++) {
+    if (sortedString[i] === sortedString[i + 1]) {
+      return false; // 如果有相邻的相同字符，说明有重复字符
+    }
+  }
+  return true; // 没有重复字符
+};
+
 
 // 示例用法
 const str1 = "abcdefg";
