@@ -5,16 +5,16 @@
  * @param {*} dispatch store.dispatch
  * @returns 
  */
-function bindActionCreator(actionCreator,dispatch){
-  return function(...args){
-      dispatch(actionCreator(...args));
-  }   
+function bindActionCreator(actionCreator, dispatch) {
+  return function (...args) {
+    dispatch(actionCreator(...args));
+  }
 }
-function bindActionCreators(actionCreators,dispatch){
+function bindActionCreators(actionCreators, dispatch) {
   const boundActionCreators = {};
-  for(const key in actionCreators){
-      const actionCreator = actionCreators[key];
-      boundActionCreators[key]=bindActionCreator(actionCreator,dispatch);
+  for (const key in actionCreators) {
+    const actionCreator = actionCreators[key];
+    boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
   }
   return boundActionCreators;
 }

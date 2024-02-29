@@ -34,9 +34,9 @@ const threeNums = (nums) => {
         }
         left++
         right--
-      }else if(sum<target){
+      } else if (sum < target) {
         left++
-      }else{
+      } else {
         right--
       }
     }

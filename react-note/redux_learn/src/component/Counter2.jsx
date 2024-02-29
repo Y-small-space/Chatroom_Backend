@@ -24,7 +24,7 @@ const { add, minus } = bindActionCreators(
   store.dispatch
 )
 
-class Counter1 extends React.Component {
+class Counter2 extends React.Component {
   constructor(props) {
     super(props);
     // 通过调用store.getState()获取仓库中的最新的状态
@@ -53,4 +53,4 @@ class Counter1 extends React.Component {
   }
 }
 
-export default Counter1;
+export default Counter2;
