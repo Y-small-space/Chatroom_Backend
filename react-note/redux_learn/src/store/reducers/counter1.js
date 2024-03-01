@@ -1,10 +1,11 @@
-export default function reducer(state = { number: 0 }, action) {
+import * as types from '../actiontypes'
+export default function reducer1(state = { number: 0 }, action) {
   switch (action.type) {
-    case ADD:
+    case types.ADD1:
       return { number: state.number + 1 }
-    case MINUS:
+    case types.MINUS1:
       return { number: state.number - 1 }
     default:
-      return { state };
+      return state;
   }
 }

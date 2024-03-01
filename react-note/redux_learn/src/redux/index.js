@@ -1,5 +1,8 @@
 import createStore from './createStore';
-
-export {
-  createStore
+import bindActionCreators from './bindActionCreators';
+import combineReducers from './combineReducers';
+export  {
+  createStore,
+  bindActionCreators,
+  combineReducers
 }
