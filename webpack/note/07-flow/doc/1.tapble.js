@@ -3,6 +3,22 @@
 // jquery on triger
 // const {SyncHook} = require("tapable");
 
+// const { SyncHook } = require('tapable');
+
+// let hook = new SyncHook();
+// hook.tap('插件的名称', () => {
+//   console.log('=======================');
+//   console.log('插件的名称');
+//   console.log('=======================');
+// })
+// hook.call();
+
+
+
+
+
+
+
 class SyncHook {
   taps = [];
   tap(name, callback) {

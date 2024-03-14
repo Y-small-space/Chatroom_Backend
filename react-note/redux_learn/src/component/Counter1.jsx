@@ -19,5 +19,5 @@ class Counter1 extends React.Component {
 const mapStateToProps = state => state.reducer1;
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps)
+export default connect(mapStateToProps,mapDispatchToProps)
   (Counter1);

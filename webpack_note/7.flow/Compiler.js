@@ -34,7 +34,6 @@ class Compiler{
         //开始一次新的编译
         this.compile(onCompiled);
         this.hooks.done.call();
-       
     }
     compile(onCompiled){
         const complication = new Complication(this.options);

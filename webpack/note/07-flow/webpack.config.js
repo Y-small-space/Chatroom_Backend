@@ -33,9 +33,7 @@ module.exports = {
     ]
   },
   plugins: [
-
     new RunPlugin(),
-
     new Run2Plugin(),
     new Run1Plugin(),
     new DonePlugin(),

@@ -1,5 +1,5 @@
 import React from "react";
-import ReactReduxContext from "./ReactReduxcontext";
+import ReactReduxContext from "./ReactReduxContext";
 import { bindActionCreators } from "../redux";
 
 /**

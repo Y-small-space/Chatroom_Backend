@@ -3,4 +3,4 @@ import * as actionTypes from '../actiontypes.js';
 export const add = (payload) => ({ type: actionTypes.ADD1, payload });
 export const minus = () => ({ type: actionTypes.MINUS1 });
 export const actionCreators = { add, minus }
-export default actionCreators
+export default actionCreators;
